@@ -14,5 +14,6 @@ Icon?
 pip-log.txt
 
 env/
+_private/
 
 *.egg-info

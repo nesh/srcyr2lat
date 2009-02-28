@@ -9,14 +9,10 @@
 
 
 from distutils.cmd import Command
-import doctest
-from glob import glob
-import os
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
-import sys
 
 setup(
     name = 'srcyr2lat',
@@ -29,7 +25,7 @@ setup(
     url = 'http://github.com/nesh/srcyr2lat',
     zip_safe = True,
     packages = ['srcyr2lat'],
-    # test_suite = 'srcyr2lat.tests.suite',
+    test_suite = 'srcyr2lat.tests',
     scripts=['bin/srcyr2lat']
 )
 

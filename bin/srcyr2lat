@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
+# Copyright (C) 2009 Djordjevic Nebojsa <djnesh@gmail.com>
+# All rights reserved.
+#
+# This software is licensed as described in the file COPYING, which
+# you should have received as part of this distribution.
+
+import os
+import sys
+from optparse import OptionParser
+import codecs
+
+# add srcyr2lat to path so we can use it locally
+try:
+    from srcyr2lat import sr_cyr2lat
+except ImportError:
+    ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    sys.path.insert(0, ROOT)
+    from srcyr2lat import sr_cyr2lat
+
+
+desc = '''Convert's Serbian cyrillic text to latin and outputs it to stdout (ENCODING encoded).
+If filename is not given it will read from stdin.
+'''
+
+def main():
+    parser = OptionParser(usage="usage: %prog [options] [filename]",
+                          version="%prog 0.1",
+                          description=desc)
+    parser.add_option("-f", "--file", dest="filename",
+                      help="write output to FILE", metavar="FILE")
+    parser.add_option("-e", "--e", dest="encoding",
+                      help="FILE encoding (default utf-8)",
+                      metavar="ENCODING", default='utf-8')
+    (options, args) = parser.parse_args()
+
+    if len(args) > 1:
+            parser.error("incorrect number of arguments")
+    elif len(args) == 1:
+        infh = codecs.open(args[0], 'rU', options.encoding)
+    else:
+        infh = sys.stdin
+    if options.filename:
+        outfh = codecs.open(options.filename, 'w', options.encoding)
+
+    for line in infh:
+        out = sr_cyr2lat(line)
+        if options.filename:
+            outfh.write(out)
+        else:
+            print out.encode(options.encoding).lstrip()
+
+
+if __name__ == "__main__":
+    main()
