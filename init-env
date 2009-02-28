@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# create devel env
+
+if [ ! -d ./env ]; then
+    virtualenv env
+fi
+
+if [ ! -f ./env/bin/pip ]; then
+    source ./env/bin/activate
+    ./env/bin/easy_install -U pip
+else
+    source ./env/bin/activate
+fi
+
+./env/bin/pip install -E env -r requirements.txt
