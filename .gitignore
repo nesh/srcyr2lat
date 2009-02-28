@@ -15,5 +15,7 @@ pip-log.txt
 
 env/
 _private/
+build/
+dist/
 
 *.egg-info

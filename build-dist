@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm -rf dist srcyr2lat.egg-info
+python setup.py sdist --formats=gztar,zip
+rm -rf srcyr2lat.egg-info
