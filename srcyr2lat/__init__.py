@@ -7,6 +7,7 @@
 # you should have received as part of this distribution.
 
 import codecs
+import re
 
 __all__ = ('sr_cyr2lat',)
 
@@ -75,6 +76,15 @@ CYR_TO_LAT = {
     u'ш':u'š',
 }
 
+UCASE = u'|'.join(set([x.upper() for x in CYR_TO_LAT.keys()]))
+LCASE = u'|'.join(set([x.lower() for x in CYR_TO_LAT.keys()]))
+
+TWO_CHAR_UL = re.compile(ur'(Љ|Њ|Џ)(?=%s)' % LCASE, re.UNICODE)
+TWO_CHAR_UU = re.compile(ur'(Љ|Њ|Џ)(?=%s)?' % UCASE, re.UNICODE)
+
+TWO_CHAR_LL = re.compile(ur'(љ|њ|џ)(?=%s)?' % LCASE, re.UNICODE)
+TWO_CHAR_LU = re.compile(ur'(љ|њ|џ)(?=%s)' % UCASE, re.UNICODE)
+
 def sr_cyr2lat(txt, encoding='utf-8'):
     """ Convert serbian cyrillic text to latin version.
     
@@ -89,10 +99,17 @@ def sr_cyr2lat(txt, encoding='utf-8'):
         lat = txt[:] # copy
     for c,l in CYR_TO_LAT.items():
         if c in (u'Љ', u'Њ', u'Џ',):
-            if lat.isupper():
-                lat = lat.replace(c, l.upper())
-            else:
-                lat = lat.replace(c, l)
+            lat = TWO_CHAR_UL.sub(l, lat)
+            lat = TWO_CHAR_UU.sub(l.upper(), lat)
+
+            lat = TWO_CHAR_LL.sub(l.lower(), lat)
+            lat = TWO_CHAR_LU.sub(l, lat)
+            
+            # lat = TWO_CHAR_LL.sub(l.lower(), lat)
+            # if lat.isupper():
+            #     lat = lat.replace(c, l.upper())
+            # else:
+            #     lat = lat.replace(c, l)
         else:
             lat = lat.replace(c, l)
     return lat

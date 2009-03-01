@@ -47,6 +47,14 @@ Zapisao kaluđer na sircu (đe se reže) iže (i): da bi poznao, ako đak osije�
         exp = u'NJEGOŠ nije Njegoš'
         self.assertEqual(sr_cyr2lat(src), exp)
 
+    def test_single(self):
+        src = u"Њ ЕГОШ није Његош"
+        exp = u'NJ EGOŠ nije Njegoš'
+        self.assertEqual(sr_cyr2lat(src), exp)
+        src = u"њ ЕГОШ није Његош"
+        exp = u'nj EGOŠ nije Njegoš'
+        self.assertEqual(sr_cyr2lat(src), exp)
+
     def test_title_case(self):
         src = u"Његош није Његош"
         exp = u'Njegoš nije Njegoš'
