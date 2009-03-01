@@ -42,5 +42,10 @@ Zapisao kaluđer na sircu (đe se reže) iže (i): da bi poznao, ako đak osije�
     def test_utf(self):
         self.assertEqual(sr_cyr2lat(self.src_utf), self.exp)
 
+    def test_case(self):
+        src = u"ЊЕГОШ није Његош"
+        exp = u'NJEGOŠ nije Njegoš'
+        self.assertEqual(sr_cyr2lat(src), exp)
+
 if __name__ == '__main__':
     unittest.main()
