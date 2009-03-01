@@ -16,7 +16,7 @@ except ImportError:
 
 setup(
     name = 'srcyr2lat',
-    version = '0.1.1',
+    version = '0.1.2',
     description = 'Translate serbian cyrillic text to latin version',
     long_description = '',
     author = 'Nebojsa Djordjevic',
